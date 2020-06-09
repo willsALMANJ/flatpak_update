@@ -142,11 +142,11 @@ async def get_version_github_releases(spec):
 async def get_latest_version(spec):
     "Get latest version of a single component"
     if spec["type"] == "scrape":
-        version = get_version_scrape(spec)
+        version = await get_version_scrape(spec)
     elif spec["type"] == "github_branches":
-        version = get_version_github_branches(spec)
+        version = await get_version_github_branches(spec)
     elif spec["type"] == "github_releases":
-        version = get_version_github_releases(spec)
+        version = await get_version_github_releases(spec)
     else:
         raise ValueError(f"Bad spec type: {spec['type']}")
 
