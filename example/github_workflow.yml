@@ -1,0 +1,42 @@
+name: check-for-updates
+
+on:
+  repository_dispatch:
+    types: debug-updater
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: flathub
+
+    - name: Checkout updater
+      uses: actions/checkout@v2
+      with:
+        repository: willsALMANJ/flatpak_update
+        path: updater
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ${GITHUB_WORKSPACE}/updater/requirements.txt
+
+    - name: Run flatpak_update.py
+      run: python ${GITHUB_WORKSPACE}/updater/flatpak_update.py --config ${GITHUB_WORKSPACE}/flathub/flatpak_update.yml --manifest ${GITHUB_WORKSPACE}/flathub/de.klayout.KLayout.yaml --template-dir ${GITHUB_WORKSPACE}/flathub
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v2
+      with:
+        path: flathub
+        title: Update version(s)

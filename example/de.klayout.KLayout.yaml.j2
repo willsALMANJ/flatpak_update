@@ -1,0 +1,43 @@
+app-id: de.klayout.KLayout
+runtime: org.kde.Platform
+runtime-version: "{{ runtime_version }}"
+sdk: org.kde.Sdk
+command: klayout
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host
+  - --device=dri
+modules:
+- name: gdbm
+  config-opts:
+    - --enable-libgdbm-compat
+  sources:
+    - type: archive
+      url: https://ftp.gnu.org/gnu/gdbm/gdbm-{{ gdbm_version }}.tar.gz
+      sha256: {{ gdbm_sha256 }}
+
+- name: ruby
+  config-opts:
+    - --enable-shared
+  sources:
+    - type: archive
+      url: https://cache.ruby-lang.org/pub/ruby/{{ ruby_version[0] }}.{{ ruby_version[1] }}/ruby-{{ruby_version }}.tar.gz
+      sha256: {{ ruby_sha256 }}
+
+- name: klayout
+  buildsystem: simple
+  build-commands:
+    - bash ./build.sh -bin ${FLATPAK_DEST}/bin -j$FLATPAK_BUILDER_N_JOBS
+  post-install:
+    - install -Dm644 de.klayout.KLayout.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+    - install -Dm644 etc/klayout.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+    - install -Dm644 etc/logo.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
+    - desktop-file-edit --set-icon=${FLATPAK_ID} /app/share/applications/${FLATPAK_ID}.desktop
+  sources:
+    - type: archive
+      url: https://www.klayout.org/downloads/source/klayout-{{ klayout_version }}.tar.gz
+      sha256: {{ klayout_sha256 }}
+    - type: file
+      path: de.klayout.KLayout.metainfo.xml

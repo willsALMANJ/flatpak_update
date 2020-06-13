@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>de.klayout.KLayout</id>
+  
+  <name>KLayout</name>
+  <summary>KLayout, viewer and editor for mask layouts</summary>
+  <url type="homepage">https://www.klayout.de</url>
+  <url type="bugtracker">https://github.com/KLayout/klayout/issues</url>
+  <url type="help">https://www.klayout.de/forum/</url>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      Mask layout viewer and editor for the chip design engineer.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">de.klayout.KLayout.desktop</launchable>
+  <icon type="remote" height="256" width="256">https://raw.githubusercontent.com/KLayout/klayout/master/etc/logo.png</icon>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.klayout.de/intro-image.png</image>
+    </screenshot>
+  </screenshots>
+
+  <developer_name>Matthias Köfferlein</developer_name>
+  <provides>
+      <binary>klayout</binary>
+  </provides>
+
+  <releases>
+      <release version="{{ klayout_version }}" date="{{ klayout_version.date }}" />
+  </releases>
+
+  <content_rating type="oars-1.1" />
+
+</component>
