@@ -22,6 +22,7 @@ If maintaining this script, I would try to push the config file data into the ma
 + fedc inserts new versions into the appdata XML file. This script doesn't but it allows the version to be set with Jinja2.
 You only end up with the latest version in the XML file rather than a listing of all versions, but that is good enough.
 + This script checks the run time version as well.
+This feature was replicated in https://github.com/willsALMANJ/flatpak_check_runtime.
 + This script's `scrape` checker is similar to the html checker in fedc.
 The other checkers are different between the two.
 + This script uses three widely used Python libraries as its only dependencies.
